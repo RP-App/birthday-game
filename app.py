@@ -1,5 +1,6 @@
 import streamlit as st
 
+# ข้อมูลชุดวันเกิด
 birthday_sets = [
     [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31],
     [2,3,6,7,10,11,14,15,18,19,22,23,26,27,30,31],
@@ -13,6 +14,7 @@ color_palette = ["#A2D2FF", "#FFAFCC", "#FFE066", "#CDB4DB", "#B5EAD7", "#FFDAC1
 st.set_page_config(page_title="เกมทายวันเกิด", layout="centered")
 st.title("🎂 เกมทายวันเกิด")
 
+# สถานะเริ่มต้น
 if "step" not in st.session_state:
     st.session_state.step = 0
     st.session_state.answers = []
@@ -22,6 +24,7 @@ step = st.session_state.step
 if step < len(birthday_sets):
     st.subheader(f"ชุดที่ {step + 1} : วันเกิดของคุณอยู่ในนี้หรือไม่?")
 
+    # แสดงตัวเลข
     cols = st.columns(4)
     for idx, num in enumerate(birthday_sets[step]):
         with cols[idx % 4]:
@@ -36,16 +39,17 @@ if step < len(birthday_sets):
         if st.button("✅ ใช่"):
             st.session_state.answers.append(True)
             st.session_state.step += 1
-            st.experimental_rerun()
+            st.rerun()
     with col2:
         if st.button("❌ ไม่ใช่"):
             st.session_state.answers.append(False)
             st.session_state.step += 1
-            st.experimental_rerun()
+            st.rerun()
 else:
+    # คำนวณวันเกิด
     total = sum(2 ** i for i, val in enumerate(st.session_state.answers) if val)
     st.success(f"🎉 วันเกิดของคุณคือวันที่ **{total}**!")
     if st.button("🔁 เล่นใหม่"):
         st.session_state.step = 0
         st.session_state.answers = []
-        st.experimental_rerun()
+        st.rerun()
