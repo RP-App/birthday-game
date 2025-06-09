@@ -1,3 +1,4 @@
+
 import streamlit as st
 
 # ข้อมูลชุดวันเกิด
@@ -36,20 +37,19 @@ if step < len(birthday_sets):
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("✅ ใช่"):
+        if st.button("ใช่"):
             st.session_state.answers.append(True)
             st.session_state.step += 1
             st.rerun()
     with col2:
-        if st.button("❌ ไม่ใช่"):
+        if st.button("ไม่ใช่"):
             st.session_state.answers.append(False)
             st.session_state.step += 1
             st.rerun()
 else:
-    # คำนวณวันเกิด
     total = sum(2 ** i for i, val in enumerate(st.session_state.answers) if val)
     st.success(f"🎉 วันเกิดของคุณคือวันที่ **{total}**!")
-    if st.button("🔁 เล่นใหม่"):
+    if st.button("เล่นใหม่"):
         st.session_state.step = 0
         st.session_state.answers = []
         st.rerun()
